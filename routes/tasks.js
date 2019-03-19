@@ -19,6 +19,24 @@ router.post("/", passport.authenticate('jwt', {session: false}), (req, res) => {
     new Task(taskFields).save().then(task => res.json(task));
 });
 
+router.put("/:id", passport.authenticate('jwt', {session: false}), (req, res) => {
+    Task.findById(req.params.id)
+        .then(task => {
+
+
+            if (task.user == req.user.id) {
+                Task.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
+                    .then(task => {
+                        return res.status(204).json(task);
+                    });
+            }
+            else {
+                res.status(404).json({message: `No task found with id: ${req.params.id}`})
+
+            }
+        })
+});
+
 router.get("/", passport.authenticate('jwt', {session: false}), (req, res) => {
 
     Task.find({user: req.user.id})
