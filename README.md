@@ -40,6 +40,15 @@ userId and completed will be set by the server
 	"name":"Save $50 a day"
 ```
 
+## Update Task - PUT
+https://life-gpa-api.herokuapp.com/api/tasks/:id
+new task body
+```
+	"category":"Finance 2 test",
+	"name":"Save $50 a day",
+	"completed":true
+```
+
 Get Task - GET
 https://life-gpa-api.herokuapp.com/api/tasks
 this show the example when the user as two task.
