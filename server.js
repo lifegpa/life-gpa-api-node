@@ -1,8 +1,8 @@
 const express = require('express');
-const passport = require('passport');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
+const passport = require('passport');
 
 const users = require('./routes/users');
 
@@ -17,6 +17,8 @@ mongoose
     .then(() => console.log('Mongodb Connected'))
     .catch(err => console.log(err));
 
+app.use(passport.initialize());
+require('./config/passport')(passport);
 const port = process.env.PORT || 7000;
 
 app.use('/api/users', users);
