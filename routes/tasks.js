@@ -37,6 +37,21 @@ router.put("/:id", passport.authenticate('jwt', {session: false}), (req, res) =>
         })
 });
 
+router.delete("/:id", passport.authenticate('jwt', {session: false}), (req, res) => {
+    Task.findById(req.params.id)
+        .then(task => {
+            if (task.user == req.user.id) {
+                Task.findByIdAndRemove(req.params.id)
+                    .then(task => {
+                        return res.status(204).json(task);
+                    })
+            }
+            else {
+                res.status(400).json({message: `Task id: ${req.params.id} not found`})
+            }
+        });
+});
+
 router.get("/", passport.authenticate('jwt', {session: false}), (req, res) => {
 
     Task.find({user: req.user.id})
