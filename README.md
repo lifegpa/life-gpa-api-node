@@ -49,6 +49,10 @@ new task body
 	"completed":true
 ```
 
+## Delete Task - Delete 
+https://life-gpa-api.herokuapp.com/api/tasks/:id
+This will delete the task if it exists and the user owns the task
+
 Get Task - GET
 https://life-gpa-api.herokuapp.com/api/tasks
 this show the example when the user as two task.
