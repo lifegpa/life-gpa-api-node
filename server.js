@@ -1,11 +1,25 @@
 const express = require('express');
+const passport = require('passport');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
 
+const users = require('./routes/users');
 
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
+app.use(cors({}));
+const db = require('./config/keys').mongoURL;
+mongoose
+    .connect(db)
+    .then(() => console.log('Mongodb Connected'))
+    .catch(err => console.log(err));
+
 const port = process.env.PORT || 7000;
 
+app.use('/api/users', users);
 app.get('/testing', (req, res) => {
     res.status(200).json({message: 'Testing working'});
 });
