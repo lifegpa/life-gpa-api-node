@@ -59,12 +59,7 @@ router.get("/", passport.authenticate('jwt', {session: false}), (req, res) => {
 
     Task.find({user: req.user.id})
         .then(tasks => {
-            if (tasks.length === 0) {
-                res.status(400).json({message: 'You have not created any tasks yet'})
-            }
-            else {
-                res.status(200).json(tasks);
-            }
+            res.status(200).json(tasks);
         })
         .catch(err => {
             res.status(500).json(err);
