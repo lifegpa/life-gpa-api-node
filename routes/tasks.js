@@ -46,7 +46,7 @@ router.delete("/:id", passport.authenticate('jwt', {session: false}), (req, res)
             if (task.user == req.user.id) {
                 Task.findByIdAndRemove(req.params.id)
                     .then(task => {
-                        return res.status(204).json(task);
+                        return res.status(200).json(task);
                     })
             }
             else {
