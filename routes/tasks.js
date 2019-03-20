@@ -4,6 +4,9 @@ const passport = require('passport');
 
 const User = require('../models/User');
 const Task = require("../models/Task");
+const CompletedTask = require('../models/CompletedTask');
+
+const calculateGPA = require('./gpa');
 
 const router = express();
 
@@ -66,6 +69,35 @@ router.get("/", passport.authenticate('jwt', {session: false}), (req, res) => {
         .catch(err => {
             res.status(500).json(err);
         })
+});
+
+router.post('/submit', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+  const { tasks } = req.body;
+
+  for (let task of tasks) {
+
+    const fields = {};
+    fields.user = req.user.id;
+    fields.taskId = task._id;
+    fields.completed = task.completed;
+
+    await new CompletedTask(fields).save();
+
+  }
+
+  const gpaData = await calculateGPA(req.user.id);
+
+  res.status(200).json(gpaData);
+
+});
+
+router.get('/gpa', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+  const gpaData = await calculateGPA(req.user.id);
+
+  res.status(200).json(gpaData);
+
 });
 
 module.exports = router;
