@@ -49,7 +49,7 @@ new task body
 	"completed":true
 ```
 
-## Delete Task - Delete 
+## Delete Task - Delete
 https://life-gpa-api.herokuapp.com/api/tasks/:id
 This will delete the task if it exists and the user owns the task
 
@@ -77,4 +77,54 @@ this show the example when the user as two task.
         "__v": 0
     }
 ]
+```
+
+## Submit Daily Tasks - POST
+https://life-gpa-api.herokuapp.com/api/tasks/Submit
+Expects an object with a single property called "tasks". Tasks will be an array of the submitted tasks consisting of an id (string) and a completed flag (boolean). Example request body here:
+
+```
+{
+
+	"tasks": [
+
+		{
+			"completed": false,
+			"_id": "5c929d8d7856720004632df1"
+		},
+
+		{
+			"completed": false,
+			"_id": "5c92a345ede5f962281db5b6"
+		}
+
+	]
+
+}
+```
+
+The server will send back an object containing the total, daily, weekly, and monthly GPAs. Sample object will look like this:
+
+```
+{
+    "daily": 100,
+    "weekly": 100,
+    "monthly": 100,
+    "allTime": 100
+}
+
+```
+
+## Get all GPAs - GET
+https://life-gpa-api.herokuapp.com/api/tasks/gpa
+Returns an object with the current GPA data. Object will look like this:
+
+```
+{
+    "daily": 100,
+    "weekly": 100,
+    "monthly": 100,
+    "allTime": 100
+}
+
 ```
