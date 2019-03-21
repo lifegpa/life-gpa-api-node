@@ -30,7 +30,7 @@ router.put("/:id", passport.authenticate('jwt', {session: false}), (req, res) =>
             if (task.user == req.user.id) {
                 Task.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
                     .then(task => {
-                        return res.status(204).json(task);
+                        return res.status(200).json(task);
                     });
             }
             else {
